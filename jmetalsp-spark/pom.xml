@@ -90,6 +90,20 @@
             <artifactId>json</artifactId>
             <version>20131018</version>
         </dependency>
+        
+        <!-- For Kafka clients -->
+		<dependency>
+			<groupId>org.apache.kafka</groupId>
+			<artifactId>kafka-clients</artifactId>
+			<version>0.8.2.0</version>
+		</dependency>
+
+		<!-- Kafka -->
+		<dependency>
+			<groupId>org.apache.kafka</groupId>
+			<artifactId>kafka_2.11</artifactId>
+			<version>0.8.2.0</version>
+		</dependency>
 
 
     </dependencies>

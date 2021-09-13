@@ -78,8 +78,10 @@ public class ChartConsumer<S extends Solution<?>> implements
     if (data.getData().containsKey("solutionList")) {
       solutionList = new ArrayList<>() ;
       List<ObservedSolution> receivedList =  (List<ObservedSolution>)data.getData().get("solutionList") ;
+      
       for (int i = 0 ; i< receivedList.size(); i++) {
         solutionList.add(new PointSolution(receivedList.get(i).getPointSolution()));
+      
       }
     }
 
@@ -102,6 +104,7 @@ public class ChartConsumer<S extends Solution<?>> implements
           if(receivedList!=null && !receivedList.isEmpty()){
             ini1= (double)receivedList.get(0).getObjectives().get(0);
             ini2= (double)receivedList.get(0).getObjectives().get(1);
+            System.out.println("int--- "+ini1+ "  "+ini2);
           }
         }
         this.chart.setFrontChart(0, 1, null,ini1,ini2);
@@ -142,7 +145,6 @@ public class ChartConsumer<S extends Solution<?>> implements
   }
 
 
-  ////////////////////////////////////////////////
   public static void main(String[] args) {
     String topicName = "prueba-solutionlist-topic-from-main";
 

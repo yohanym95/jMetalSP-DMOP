@@ -84,6 +84,7 @@ public class TSPNYProvider extends Thread {
   }
 
   public static void main(String[] args) {
+	System.out.println("start");
     TSPNYProvider tspNYProvider = new TSPNYProvider("tsp");
     new Thread(tspNYProvider).start();
   }

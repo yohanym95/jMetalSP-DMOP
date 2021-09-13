@@ -75,7 +75,7 @@ public class LocalDirectoryOutputConsumer<S extends Solution<?>> implements
     fileCounter++;
   }
 
-  ////////////////////////////////////////////////
+
   public static void main(String[] args) {
     String topicName = "prueba-solutionlist-topic-from-main";
 

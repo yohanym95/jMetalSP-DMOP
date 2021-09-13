@@ -34,7 +34,6 @@ public class MultiobjectiveTSPBuilderFromNYData {
 	  
 	  // read problem
     readProblem(this.initialDataFile);
-    System.out.println(numberOfCities);
     //then pass to data ti dynamic prblem
     DynamicMultiobjectiveTSP problem =
             new DynamicMultiobjectiveTSP(numberOfCities, distanceMatrix, costMatrix);

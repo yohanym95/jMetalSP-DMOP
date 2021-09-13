@@ -2,9 +2,8 @@
 <!DOCTYPE log SYSTEM "logger.dtd">
 <log>
 <record>
-  <date>2021-08-02T05:57:21.435400400Z</date>
-  <millis>1627883841435</millis>
-  <nanos>400400</nanos>
+  <date>2021-09-09T17:57:54</date>
+  <millis>1631190474301</millis>
   <sequence>0</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
@@ -14,9 +13,8 @@
   <message>Loggers configured with null</message>
 </record>
 <record>
-  <date>2021-08-02T05:57:21.482269900Z</date>
-  <millis>1627883841482</millis>
-  <nanos>269900</nanos>
+  <date>2021-09-09T17:57:54</date>
+  <millis>1631190474344</millis>
   <sequence>1</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
@@ -26,9 +24,8 @@
   <message>Run method in the streaming data source invoked</message>
 </record>
 <record>
-  <date>2021-08-02T05:57:21.484263500Z</date>
-  <millis>1627883841484</millis>
-  <nanos>263500</nanos>
+  <date>2021-09-09T17:57:54</date>
+  <millis>1631190474344</millis>
   <sequence>2</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
@@ -37,4 +34,3 @@
   <thread>1</thread>
   <message>Directory: streamingDataDirectory</message>
 </record>
-</log>

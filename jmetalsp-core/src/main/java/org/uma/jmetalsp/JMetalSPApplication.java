@@ -1,5 +1,7 @@
 package org.uma.jmetalsp;
 
+import org.uma.jmetal.solution.DoubleSolution;
+import org.uma.jmetal.solution.PermutationSolution;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetalsp.observer.Observer;
@@ -91,6 +93,7 @@ public class JMetalSPApplication<
     }
     algorithmThread.start();
 
+    
     if(streamingDataSourceList!=null && ! streamingDataSourceList.isEmpty()) {
       streamingRuntime.startStreamingDataSources(streamingDataSourceList);
     }
@@ -110,4 +113,5 @@ public class JMetalSPApplication<
       throw new JMetalException("The algorithm data consumer list is null");
     }
   }
+
 }

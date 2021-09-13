@@ -15,6 +15,7 @@ import org.uma.jmetalsp.problem.tsp.data.GoogleDecode;
 import org.uma.jmetalsp.problem.tsp.data.ParsedNode;
 import org.uma.jmetalsp.spark.SparkStreamingDataSource;
 
+import java.io.FileWriter;
 import java.util.*;
 
 public class SimpleSparkStructuredKafkaStreamingTSP implements SparkStreamingDataSource<ObservedValue<TSPMatrixData>> {
@@ -45,31 +46,30 @@ public class SimpleSparkStructuredKafkaStreamingTSP implements SparkStreamingDat
     this.streamingContext = streamingContext;
   }
 
+  
   @Override
   public void run() {
-	System.out.println("run");
+	
     ConsumerStrategy<Integer, String> consumerStrategy = ConsumerStrategies.Subscribe(topic, kafkaParams);
     LocationStrategy locationStrategy = LocationStrategies.PreferConsistent();
-   // System.out.println(consumerStrategy.)
-
+    
     JavaInputDStream<ConsumerRecord<Integer, String>> stream =
             (JavaInputDStream<ConsumerRecord<Integer, String>>)
                     KafkaUtils.createDirectStream(streamingContext,
                             locationStrategy,
                             consumerStrategy);
-    System.out.println("run run");
-
+    
     final Map<Integer, Integer> nodeDistances = this.createCachedDistances();
-    System.out.println("run");
+    
     JavaDStream<List<ParsedNode>> nodes = stream.map(value -> {
-    	System.out.println("run run");
+
       List<ParsedNode> result = new ArrayList<>();
       final JSONArray parser = new JSONArray(value.value());
-      System.out.println(parser.length());
+      
       for (int i = 0; i < parser.length(); i++) {
-    	  
         try {
           final JSONObject object = parser.getJSONObject(i);
+//          System.out.println(object.getInt("id"));
           ParsedNode pNode = new ParsedNode(
                   object.getInt("id"),
                   object.getDouble("speed"),
@@ -88,8 +88,7 @@ public class SimpleSparkStructuredKafkaStreamingTSP implements SparkStreamingDat
           ex.printStackTrace();
         }
       }
-      System.out.println("run run run");
-      ///generateGraph(result);
+
       for (ParsedNode pnode : result) {
         for (ParsedNode p : result) {
           if (!pnode.getId().equals(p.getId())) {
@@ -104,24 +103,24 @@ public class SimpleSparkStructuredKafkaStreamingTSP implements SparkStreamingDat
           }
         }
       }
-      int removed = 0;
-      do {
-        //removed = removeIsolatedNodes(result);
-        Iterator<ParsedNode> itr = result.iterator();
-        int count = 0;
-        while (itr.hasNext()) {
-          ParsedNode node = itr.next();
-          if (node.getNodes().size() < 2) {
-            //removeEdgesFor(node,result);
-            for (ParsedNode pnode : result) {
-              pnode.getNodes().remove(node);
-            }
-            removed++;
-            itr.remove();
-          }
-        }
-      } while (removed != 0);
-      //  generatePositionGraph(result);
+//      int removed = 0;
+//      do {
+//        //removed = removeIsolatedNodes(result);
+//        Iterator<ParsedNode> itr = result.iterator();
+//        int count = 0;
+//        while (itr.hasNext()) {
+//          ParsedNode node = itr.next();
+//          if (node.getNodes().size() < 2) {
+//            //removeEdgesFor(node,result);
+//            for (ParsedNode pnode : result) {
+//              pnode.getNodes().remove(node);
+//            }
+//            removed++;
+//            itr.remove();
+//          }
+//        }
+//      } while (removed != 0);
+    //  generatePositionGraph(result);
       int i = 0;
       for (ParsedNode node : result) {
         node.setPosition(i);
@@ -130,11 +129,12 @@ public class SimpleSparkStructuredKafkaStreamingTSP implements SparkStreamingDat
       return result;
 
     });
-
+    
+   
     nodes.foreachRDD(aux -> {
       if (aux != null && aux.rdd().count() > 0) {
         List<ParsedNode> pNodes = aux.reduce((key, value) -> value);
-
+        
         for (ParsedNode node : pNodes) {
           if (hashNodes.get(node.getId()) != null) {
             ParsedNode nodeAux = hashNodes.get(node.getId());
@@ -162,8 +162,9 @@ public class SimpleSparkStructuredKafkaStreamingTSP implements SparkStreamingDat
           if (node.isCostUpdated() || node.isDistanceUpdated()) {
             System.out.println("Updated " + node.getId() + " : " + node.getDistance() + " , " + node.getTravelTime());
           }
-
+          
           TSPMatrixData matrix = generateMatrix(node);
+          
           if (matrix != null) {
             observable.setChanged();
             observable.notifyObservers(new ObservedValue<>(matrix));
@@ -171,6 +172,8 @@ public class SimpleSparkStructuredKafkaStreamingTSP implements SparkStreamingDat
         }
       }
     });
+    
+
   }
 
   private void addManualEdges() {

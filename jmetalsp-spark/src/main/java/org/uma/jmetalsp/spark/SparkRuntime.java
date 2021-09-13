@@ -43,7 +43,9 @@ public class SparkRuntime implements StreamingRuntime {
       streamingDataSource.run();
     }
 
+    System.out.println("stream");
     streamingContext.start();
+    System.out.println("stream 2");
     try {
       streamingContext.awaitTermination();
     } catch (InterruptedException e) {

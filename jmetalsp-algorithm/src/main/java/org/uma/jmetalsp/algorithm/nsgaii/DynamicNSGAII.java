@@ -111,6 +111,7 @@ public class DynamicNSGAII<S extends Solution<?>>
      * @param args
      */
     public static void main(String[] args) {
+    	System.out.println("algorithms");
         String topicName = "prueba-solutionlist-topic-from-main";
 
         DynamicProblem<DoubleSolution, ObservedValue<Integer>> problem = new FDA2();
@@ -120,7 +121,7 @@ public class DynamicNSGAII<S extends Solution<?>>
         MutationOperator<DoubleSolution> mutation =
                 new PolynomialMutation(1.0 / problem.getNumberOfVariables(), 20.0);
         SelectionOperator<List<DoubleSolution>, DoubleSolution> selection = new BinaryTournamentSelection<DoubleSolution>();
-        ;
+        
         InvertedGenerationalDistance<PointSolution> igd =
                 new InvertedGenerationalDistance<>();
         CoverageFront<PointSolution> coverageFront = new CoverageFront<>(0.005, igd);
@@ -141,7 +142,7 @@ public class DynamicNSGAII<S extends Solution<?>>
         //        new KafkaBasedConsumer<>("prueba-int-topic-from-main", problem, new ObservedValue<>()) ;
 
         KafkaBasedConsumer<ObservedValue<Integer>> problemKafkaBasedConsumer =
-                new KafkaBasedConsumer<>("prueba-tsp-topic-from-main", problem, new ObservedValue<>(), "avsc/TSPMatrixData.avsc");
+                new KafkaBasedConsumer<>("prueba-tsp-topic-from-main", problem, new ObservedValue<>(), "E:\\study files\\spark\\test\\jMetalSP-master\\avsc\\TSPMatrixData.txt");
         problemKafkaBasedConsumer.start();
         
 
